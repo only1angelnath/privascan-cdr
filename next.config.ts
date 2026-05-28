@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  serverExternalPackages: [
+    "helia",
+    "@helia/unixfs",
+    "libp2p",
+    "@libp2p/webrtc",
+    "node-datachannel",
+  ],
+  turbopack: {},
+}
 
-export default nextConfig;
+export default nextConfig

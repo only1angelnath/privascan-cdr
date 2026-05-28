@@ -1,0 +1,10 @@
+// CDR condition contract addresses on Story Aeneid testnet (chain ID 1315)
+// Source: PRIVASCAN_CDR_HANDOFF.md section 7
+
+export const CONDITIONS = {
+  OWNER_WRITE: "0x4C9bFC96d7092b590D497A191826C3dA2277c34B",
+  LICENSE_READ: "0xC0640AD4CF2CaA9914C8e5C44234359a9102f7a3",
+  LICENSE_TOKEN: "0xFe3838BFb30B34170F00030B52eA4893d8aAC6bC",
+} as const
+
+export const STORY_CHAIN_ID = 1315
