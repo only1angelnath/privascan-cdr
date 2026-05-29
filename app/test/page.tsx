@@ -30,7 +30,7 @@ export default function TestPage() {
     if (!walletClient || !address) return
     setBusy(true)
     setLog([])
-    setUuid("")
+    setUuid(null)
     setCid("")
     try {
       addLog("Ensuring WASM ready...")
