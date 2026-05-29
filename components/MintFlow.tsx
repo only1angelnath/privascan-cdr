@@ -90,7 +90,7 @@ export default function MintFlow({ report, onClose, onSuccess }: Props) {
 
   function copyUUID() {
     if (!result) return
-    navigator.clipboard.writeText(result.uuid)
+    navigator.clipboard.writeText(String(result.uuid))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }

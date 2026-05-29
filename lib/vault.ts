@@ -19,7 +19,7 @@ export interface MintProgress {
 }
 
 export interface MintResult {
-  uuid: string
+  uuid: number
   cid: string
 }
 
@@ -79,7 +79,7 @@ export async function mintPrivateReport(
   })
 
   progress("done", "Private report minted successfully!")
-  return { uuid, cid: ipfsCid }
+  return { uuid, cid: ipfsCid as string }
 }
 
 export async function readPrivateReport(
