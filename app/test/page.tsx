@@ -16,7 +16,7 @@ export default function TestPage() {
   const { address, isConnected } = useAccount()
   const { data: walletClient } = useWalletClient()
 
-  const [uuid, setUuid] = useState<string>("")
+  const [uuid, setUuid] = useState<number | null>(null)
   const [cid, setCid] = useState<string>("")
   const [decrypted, setDecrypted] = useState<string>("")
   const [log, setLog] = useState<string[]>([])
@@ -73,7 +73,7 @@ export default function TestPage() {
         skipConditionValidation: true,
       })
       addLog("Vault allocated! UUID: " + newUuid)
-      setUuid(String(newUuid))
+      setUuid(newUuid)
 
       // Step 5: TDH2-encrypt the payload key with UUID-derived label
       addLog("TDH2-encrypting data key...")
@@ -154,7 +154,7 @@ export default function TestPage() {
 
             <button
               onClick={handleDecrypt}
-              disabled={busy || !uuid}
+              disabled={busy || uuid === null}
               style={{ padding: "10px 24px", background: "#06b6d4", color: "#fff", border: "none", borderRadius: 8, cursor: (busy || !uuid) ? "not-allowed" : "pointer" }}
             >
               Decrypt
@@ -163,7 +163,7 @@ export default function TestPage() {
 
           {uuid && (
             <div style={{ marginBottom: 16 }}>
-              <p style={{ color: "#84cc16" }}>Vault UUID: {uuid}</p>
+              <p style={{ color: "#84cc16" }}>Vault UUID: {uuid ?? ""}</p>
               <p style={{ color: "#64748b", fontSize: 12 }}>IPFS CID: {cid}</p>
             </div>
           )}
