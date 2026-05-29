@@ -6,6 +6,8 @@ import { useState, useEffect } from "react"
 import { useAccount, useConnect, useDisconnect } from "wagmi"
 import { injected } from "wagmi/connectors"
 import { fetchPrivateReport, PrivateScoreReport } from "@/lib/privascan"
+import MintFlow from "@/components/MintFlow"
+import type { MintResult } from "@/lib/vault"
 
 const CHAINS = ["ethereum", "base", "arbitrum", "optimism", "polygon", "bsc"]
 const GRADE_COLORS: Record<string, string> = { A: "#22c55e", B: "#84cc16", C: "#f59e0b", D: "#f97316", F: "#ef4444" }
@@ -181,6 +183,8 @@ export default function HomePage() {
   const [stage, setStage] = useState(0)
   const [error, setError] = useState<string | null>(null)
   const [report, setReport] = useState<PrivateScoreReport | null>(null)
+  const [mintOpen, setMintOpen] = useState(false)
+  const [mintResult, setMintResult] = useState<MintResult | null>(null)
 
   async function handleFetch() {
     if (!address.match(/^0x[0-9a-fA-F]{40}$/)) { setError("Invalid address — must be 0x + 40 hex chars"); return }
@@ -354,8 +358,10 @@ export default function HomePage() {
                 <><div style={{ fontSize: 11, color: "#334155" }}>Connect wallet to mint this as a CDR vault on Story Aeneid</div><WalletButton /></>
               ) : (
                 <><div style={{ fontSize: 11, color: "#22c55e" }}>✓ Wallet connected — ready to mint</div>
-                <button style={{ padding: "11px 26px", background: "linear-gradient(135deg,#7c3aed,#5b21b6)", color: "#fff", border: "1px solid rgba(124,58,237,0.4)", borderRadius: 10, fontFamily: "'Orbitron',monospace", fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", cursor: "pointer", boxShadow: "0 0 24px rgba(124,58,237,0.25)" }}>
-                  MINT CDR VAULT →
+                <button
+                  onClick={() => setMintOpen(true)}
+                  style={{ padding: "11px 26px", background: "linear-gradient(135deg,#7c3aed,#5b21b6)", color: "#fff", border: "1px solid rgba(124,58,237,0.4)", borderRadius: 10, fontFamily: "'Orbitron',monospace", fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", cursor: "pointer", boxShadow: "0 0 24px rgba(124,58,237,0.25)" }}>
+                  {mintResult ? "VIEW VAULT →" : "MINT CDR VAULT →"}
                 </button></>
               )}
             </div>
@@ -391,6 +397,15 @@ export default function HomePage() {
           </div>
         )}
       </main>
+
+      {/* Mint modal */}
+      {mintOpen && report && (
+        <MintFlow
+          report={report}
+          onClose={() => setMintOpen(false)}
+          onSuccess={(res) => { setMintResult(res); setMintOpen(false) }}
+        />
+      )}
 
       {/* Footer */}
       <footer style={{ position: "relative", zIndex: 10, borderTop: "1px solid rgba(255,255,255,0.04)", padding: "20px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
