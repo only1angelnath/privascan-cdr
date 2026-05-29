@@ -60,7 +60,6 @@ export async function mintPrivateReport(
       [ownerAddress as `0x${string}`]
     ),
     readConditionData: "0x",
-    accessAuxData: "0x",
     skipConditionValidation: true,
   })
 
