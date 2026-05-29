@@ -73,7 +73,7 @@ export default function TestPage() {
         skipConditionValidation: true,
       })
       addLog("Vault allocated! UUID: " + newUuid)
-      setUuid(newUuid)
+      setUuid(String(newUuid))
 
       // Step 5: TDH2-encrypt the payload key with UUID-derived label
       addLog("TDH2-encrypting data key...")
